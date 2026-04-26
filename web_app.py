@@ -1,14 +1,18 @@
+import os
+from dotenv import load_dotenv
 from functools import wraps
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask import jsonify
 from models import db, User, Trade
 
+load_dotenv()
+
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "sqlite:///project.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SECRET_KEY"] = "change-this-later"
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
 db.init_app(app)
 
